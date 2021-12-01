@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 
@@ -8,7 +8,7 @@ interface ContainerPropsInterface {
 
 const Container = styled.div`
   position: relative;
-  
+
   display: flex;
 `;
 

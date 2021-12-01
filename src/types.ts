@@ -1,3 +1,4 @@
+
 interface SlideInterface {
     img: string,
     text: string

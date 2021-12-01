@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { SlideInterface } from "../../types";
 
 import SlideItem from "../SlideItem";
 
 import Navs from "../SlideItem/Elements/Navs";
-import Container from "../SlideItem/Elements/Container";
+import Container from "../../primitives/Container";
 
 import Typography from "../../primitives/Typography";
 
@@ -23,9 +23,11 @@ interface SliderPropsInterface {
 }
 
 const Slider = (props: SliderPropsInterface) => {
-    const { slides, navs, pags, loop, auto, delay } = props;
+    const { slides, navs, pags, loop, auto, delay, stopMouseHover } = props;
 
     const [currentSlide, setCurrentSlide] = useState<number>(0);
+
+    const [slideFreeze, setSlideFreeze] = useState(false);
 
     const onNextSlide = useCallback(
         () => {
@@ -54,28 +56,48 @@ const Slider = (props: SliderPropsInterface) => {
     const currentSlideNumber = useMemo(() => getSlideNumber(currentSlide), [currentSlide]);
     const currentSlideLength = useMemo(() => slides.length, [slides.length]);
 
+    const switchOnNextSlide = useCallback(() => {
+        if (!slideFreeze) {
+            onNextSlide();
+        }
+    }, [onNextSlide, slideFreeze]);
+
     useEffect(() => {
         if (auto) {
             const intervalDelay = delay || 5000;
 
-            const interval = setInterval(onNextSlide, intervalDelay);
+            const interval = setInterval(switchOnNextSlide, intervalDelay);
 
             return () => clearInterval(interval);
         }
-    }, [onNextSlide]);
+    }, [switchOnNextSlide]);
+
+    const onMouseEnterContainer = () => {
+          if (auto && stopMouseHover) {
+              setSlideFreeze(true);
+          }
+    };
+
+    const onMouseLeaveContainer = () => {
+        if (auto && stopMouseHover) {
+            setSlideFreeze(false);
+        }
+    };
 
     return (
         <>
-            <Container>
-                <SlideItem {...slides[currentSlide]}/>
-                {navs !== false && (
-                    <Navs
-                        color={'#fff'}
-                        onNext={onNextSlide}
-                        onPrev={onPrevSlide}
-                    />
-                )}
-            </Container>
+            <div onMouseEnter={onMouseEnterContainer} onMouseLeave={onMouseLeaveContainer}>
+                <Container>
+                    <SlideItem {...slides[currentSlide]}/>
+                    {navs !== false && (
+                        <Navs
+                            color={'#fff'}
+                            onNext={onNextSlide}
+                            onPrev={onPrevSlide}
+                        />
+                    )}
+                </Container>
+            </div>
             {pags !== false && (
                 <Typography variant="title" align="center">
                     {`${currentSlideNumber}/${currentSlideLength}`}

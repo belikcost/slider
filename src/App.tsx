@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 import Slider from "./components/Slider";
 
 
@@ -16,15 +18,23 @@ const slides = [
     },
 ];
 
+const AppContainer = styled.div`
+  width: 800px;
+  
+  margin: 0 auto;
+`;
+
 export const App = () => {
 
     return (
-        <Slider
-            slides={slides}
-            loop={true}
-            navs={true}
-            pags={true}
-            stopMouseHover={true}
-        />
+        <AppContainer>
+            <Slider
+                slides={slides}
+                loop={true}
+                navs={true}
+                pags={true}
+                stopMouseHover={true}
+            />
+        </AppContainer>
     );
-}
+};
