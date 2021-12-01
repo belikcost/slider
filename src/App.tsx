@@ -33,6 +33,8 @@ export const App = () => {
                 loop={true}
                 navs={true}
                 pags={true}
+                auto={true}
+                delay={5000}
                 stopMouseHover={true}
             />
         </AppContainer>

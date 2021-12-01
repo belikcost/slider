@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import styled from "styled-components";
+
 
 type variantType = 'body' | 'title';
 type alignType = 'center' | 'right' | 'left';
@@ -55,4 +56,4 @@ const Typography = (props: TypographyPropsInterface) => {
     }
 };
 
-export default Typography;
+export default React.memo(Typography);

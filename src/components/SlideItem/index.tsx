@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 import { SlideInterface } from "../../types";
@@ -39,4 +40,4 @@ const SlideItem = (props: SlideInterface) => {
     );
 };
 
-export default SlideItem;
+export default React.memo(SlideItem);

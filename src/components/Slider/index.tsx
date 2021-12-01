@@ -3,11 +3,10 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SlideInterface } from "../../types";
 
 import SlideItem from "../SlideItem";
-
 import Navs from "../SlideItem/Elements/Navs";
-import Container from "../../primitives/Container";
+import Pagination from "./Elements/Pagination";
 
-import Typography from "../../primitives/Typography";
+import Container from "../../primitives/Container";
 
 import { getSlideNumber } from "./utils";
 
@@ -84,11 +83,13 @@ const Slider = (props: SliderPropsInterface) => {
         }
     };
 
+    const currentSlideItem = useMemo(() => slides[currentSlide], [currentSlide, slides]);
+
     return (
         <>
             <div onMouseEnter={onMouseEnterContainer} onMouseLeave={onMouseLeaveContainer}>
                 <Container>
-                    <SlideItem {...slides[currentSlide]}/>
+                    <SlideItem img={currentSlideItem.img} text={currentSlideItem.text}/>
                     {navs !== false && (
                         <Navs
                             color={'#fff'}
@@ -99,9 +100,10 @@ const Slider = (props: SliderPropsInterface) => {
                 </Container>
             </div>
             {pags !== false && (
-                <Typography variant="title" align="center">
-                    {`${currentSlideNumber}/${currentSlideLength}`}
-                </Typography>
+                <Pagination
+                    currentSlideNumber={currentSlideNumber}
+                    currentSlideLength={currentSlideLength}
+                />
             )}
         </>
     );
