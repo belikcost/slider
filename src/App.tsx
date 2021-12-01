@@ -24,8 +24,6 @@ export const App = () => {
             loop={true}
             navs={true}
             pags={true}
-            auto={true}
-            delay={3}
             stopMouseHover={true}
         />
     );
