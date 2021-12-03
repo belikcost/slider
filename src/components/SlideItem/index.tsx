@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { SlideInterface } from "../../types";
 
 import Typography from "../../primitives/Typography";
+import { TypographyVariant } from "../../enums";
 
 
 const Image = styled.img`
@@ -32,7 +33,7 @@ const SlideItem = (props: SlideInterface) => {
         <>
             <Image src={img} alt={text}/>
             <Figure>
-                <Typography variant="title">
+                <Typography variant={TypographyVariant.title}>
                     {text}
                 </Typography>
             </Figure>

@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 import Typography from "../../../../primitives/Typography";
+import { TypographyAlign, TypographyVariant } from "../../../../enums";
+
 
 
 interface SlideCountPropsInterface {
@@ -18,7 +20,7 @@ const SlideCountComponent = ({ currentSlideNumber, currentSlideLength }: SlideCo
 
     return (
         <SlideCount>
-            <Typography variant="title" align="center" color="#fff">
+            <Typography variant={TypographyVariant.title} align={TypographyAlign.center} color="#fff">
                 {`${currentSlideNumber}/${currentSlideLength}`}
             </Typography>
         </SlideCount>
