@@ -8,7 +8,7 @@ import SlideCount from "./Elements/SlideCount";
 
 import Container from "../../primitives/Container";
 
-import { getSlideNumber } from "./utils";
+import { incrementSlideIndex } from "./utils";
 import Pagination from "./Elements/Pagination";
 
 
@@ -53,7 +53,7 @@ const Slider = ({ slides, navs, pags, loop, auto, delay, stopMouseHover }: Slide
         }, [currentSlide, loop, slides.length]
     );
 
-    const currentSlideNumber = getSlideNumber(currentSlide);
+    const currentSlideNumber = incrementSlideIndex(currentSlide);
     const currentSlideLength = slides.length;
 
     const switchOnNextSlide = useCallback(() => {

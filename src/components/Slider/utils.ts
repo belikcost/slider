@@ -1,5 +1,5 @@
-const getSlideNumber = (slideIndex: number) => slideIndex + 1;
+const incrementSlideIndex = (slideIndex: number) => slideIndex + 1;
 
 export {
-    getSlideNumber
-}
+    incrementSlideIndex
+};
