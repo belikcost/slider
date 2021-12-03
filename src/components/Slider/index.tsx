@@ -9,6 +9,7 @@ import SlideCount from "./Elements/SlideCount";
 import Container from "../../primitives/Container";
 
 import { getSlideNumber } from "./utils";
+import Pagination from "./Elements/Pagination";
 
 
 interface SliderPropsInterface {
@@ -100,6 +101,9 @@ const Slider = ({ slides, navs, pags, loop, auto, delay, stopMouseHover }: Slide
                         currentSlideLength={currentSlideLength}
                     />
                 </Container>
+                {pags && (
+                    <Pagination currentSlide={currentSlide} slides={slides} setCurrentSlide={setCurrentSlide}/>
+                )}
             </div>
         </>
     );
