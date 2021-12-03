@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { SlideInterface } from "../../types";
 
@@ -22,14 +22,16 @@ interface SliderPropsInterface {
     delay?: number,
 }
 
+const DEFAULT_DELAY = 5000;
+
 const Slider = ({ slides, navs, pags, loop, auto, delay, stopMouseHover }: SliderPropsInterface) => {
     const [currentSlide, setCurrentSlide] = useState<number>(0);
 
-    const [slideFreeze, setSlideFreeze] = useState(false);
+    const slideFreeze = useRef(false);
 
     const onNextSlide = useCallback(
         () => {
-            let next = currentSlide + 1;
+            const next = currentSlide + 1;
 
             if (next < slides.length) {
                 setCurrentSlide(next);
@@ -41,7 +43,7 @@ const Slider = ({ slides, navs, pags, loop, auto, delay, stopMouseHover }: Slide
 
     const onPrevSlide = useCallback(
         () => {
-            let prev = currentSlide - 1;
+            const prev = currentSlide - 1;
 
             if (prev >= 0) {
                 setCurrentSlide(prev);
@@ -51,34 +53,39 @@ const Slider = ({ slides, navs, pags, loop, auto, delay, stopMouseHover }: Slide
         }, [currentSlide, loop, slides.length]
     );
 
-    const currentSlideNumber = useMemo(() => getSlideNumber(currentSlide), [currentSlide]);
-    const currentSlideLength = useMemo(() => slides.length, [slides.length]);
+    const currentSlideNumber = getSlideNumber(currentSlide);
+    const currentSlideLength = slides.length;
 
     const switchOnNextSlide = useCallback(() => {
-        if (!slideFreeze) {
+        if (!slideFreeze.current) {
             onNextSlide();
         }
-    }, [onNextSlide, slideFreeze]);
+    }, [onNextSlide, slideFreeze.current]);
 
     useEffect(() => {
-        if (auto) {
-            const intervalDelay = delay || 5000;
+        if (!auto) return;
 
-            const interval = setInterval(switchOnNextSlide, intervalDelay);
+        const intervalDelay = delay || DEFAULT_DELAY;
 
-            return () => clearInterval(interval);
-        }
+        const interval = setInterval(switchOnNextSlide, intervalDelay);
+
+        return () => clearInterval(interval);
+
     }, [switchOnNextSlide]);
 
     const onMouseEnterContainer = () => {
-          if (auto && stopMouseHover) {
-              setSlideFreeze(true);
-          }
+        const canFreeze = auto && stopMouseHover;
+
+        if (canFreeze) {
+            slideFreeze.current = true;
+        }
     };
 
     const onMouseLeaveContainer = () => {
-        if (auto && stopMouseHover) {
-            setSlideFreeze(false);
+        const canFreeze = auto && stopMouseHover;
+
+        if (canFreeze) {
+            slideFreeze.current = false;
         }
     };
 
@@ -109,4 +116,4 @@ const Slider = ({ slides, navs, pags, loop, auto, delay, stopMouseHover }: Slide
     );
 };
 
-export default Slider;
+export default React.memo(Slider);
