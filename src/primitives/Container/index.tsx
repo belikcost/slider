@@ -22,4 +22,4 @@ const ContainerComponent = (props: ContainerPropsInterface) => {
     );
 };
 
-export default React.memo(ContainerComponent);
+export default ContainerComponent;
