@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SlideInterface } from "../../types";
 
 import SlideItem from "../SlideItem";
-import Navs from "../SlideItem/Elements/Navs";
-import Pagination from "./Elements/Pagination";
+import Navs from "./Elements/Navs";
+import SlideCount from "./Elements/SlideCount";
 
 import Container from "../../primitives/Container";
 
@@ -21,9 +21,7 @@ interface SliderPropsInterface {
     delay?: number,
 }
 
-const Slider = (props: SliderPropsInterface) => {
-    const { slides, navs, pags, loop, auto, delay, stopMouseHover } = props;
-
+const Slider = ({ slides, navs, pags, loop, auto, delay, stopMouseHover }: SliderPropsInterface) => {
     const [currentSlide, setCurrentSlide] = useState<number>(0);
 
     const [slideFreeze, setSlideFreeze] = useState(false);
@@ -97,14 +95,12 @@ const Slider = (props: SliderPropsInterface) => {
                             onPrev={onPrevSlide}
                         />
                     )}
+                    <SlideCount
+                        currentSlideNumber={currentSlideNumber}
+                        currentSlideLength={currentSlideLength}
+                    />
                 </Container>
             </div>
-            {pags !== false && (
-                <Pagination
-                    currentSlideNumber={currentSlideNumber}
-                    currentSlideLength={currentSlideLength}
-                />
-            )}
         </>
     );
 };

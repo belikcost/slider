@@ -31,8 +31,7 @@ const Navs = styled.div`
 `;
 
 
-const NavsComponent = (props: NavsPropsInterface) => {
-    const { color, onNext, onPrev } = props;
+const NavsComponent = ({ color, onNext, onPrev }: NavsPropsInterface) => {
 
     return (
         <Navs>
