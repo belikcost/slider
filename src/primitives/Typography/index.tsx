@@ -45,10 +45,9 @@ const Typography = (props: TypographyPropsInterface) => {
                 {children}
             </Title>
         );
-    } else {
-        return null;
     }
 
+    return null;
 };
 
 export default React.memo(Typography);

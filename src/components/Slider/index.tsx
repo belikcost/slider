@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import styled from "styled-components";
 
 import { SlideInterface } from "../../types";
 
 import SlideItem from "../SlideItem";
 import Navs from "./Elements/Navs";
 import SlideCount from "./Elements/SlideCount";
-
-import Container from "../../primitives/Container";
+import Pagination from "./Elements/Pagination";
 
 import { incrementSlideIndex } from "./utils";
-import Pagination from "./Elements/Pagination";
 
 
 interface SliderPropsInterface {
@@ -91,12 +90,17 @@ const Slider = ({ slides, navs, pags, loop, auto, delay, stopMouseHover }: Slide
 
     const currentSlideItem = useMemo(() => slides[currentSlide], [currentSlide, slides]);
 
+    const Container = styled.div`
+      position: relative;
+      display: flex;
+    `;
+
     return (
         <>
             <div onMouseEnter={onMouseEnterContainer} onMouseLeave={onMouseLeaveContainer}>
                 <Container>
                     <SlideItem img={currentSlideItem.img} text={currentSlideItem.text}/>
-                    {navs !== false && (
+                    {navs && (
                         <Navs
                             color={'#fff'}
                             onNext={onNextSlide}
