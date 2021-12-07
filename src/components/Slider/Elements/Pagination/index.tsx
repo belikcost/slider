@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useCallback } from "react";
 import styled from "styled-components";
 
 import { SlideInterface } from "../../../../types";
@@ -20,6 +20,23 @@ const Circle = styled.div(({ active }: { active: boolean }) => ({
     cursor: 'pointer',
 }));
 
+interface CircleComponentPropsInterface {
+    active: boolean;
+    slideIndex: number;
+    setCurrentSlide: (slideIndex: number) => void;
+}
+
+const CircleComponent = ({ active, slideIndex, setCurrentSlide }: CircleComponentPropsInterface) => {
+    const onClick = useCallback(() => setCurrentSlide(slideIndex), [slideIndex]);
+
+    return (
+        <Circle
+            active={active}
+            onClick={onClick}
+        />
+    );
+}
+
 const Pagination = styled.div`
   display: flex;
   justify-content: center;
@@ -31,9 +48,10 @@ const PaginationComponent = ({ currentSlide, slides, setCurrentSlide }: Paginati
     return (
         <Pagination>
             {slides.map((slide, i) => (
-                <Circle
+                <CircleComponent
                     active={currentSlide === i}
-                    onClick={() => setCurrentSlide(i)}
+                    slideIndex={i}
+                    setCurrentSlide={setCurrentSlide}
                     key={i}
                 />
             ))}
