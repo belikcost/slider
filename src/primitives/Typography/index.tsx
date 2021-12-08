@@ -11,37 +11,54 @@ interface TypographyPropsInterface {
     align?: TypographyAlign,
 }
 
+interface StylesPropsInterface {
+    align: TypographyAlign | undefined;
+    color: string | undefined;
+}
+
 const defaultStyles = {
     fontFamily: 'sans-serif',
     color: '#000',
 };
 
+const BodyStyles = ({ align, color }: StylesPropsInterface) => {
+
+    return ({
+        ...defaultStyles,
+        color,
+        textAlign: align,
+        fontSize: 15,
+    });
+};
+
+const Body = styled.p(BodyStyles);
+
+const TitleStyles = ({ align, color }: StylesPropsInterface) => {
+
+    return ({
+        ...defaultStyles,
+        color,
+        textAlign: align,
+        fontSize: 20,
+    });
+};
+
+const Title = styled.h2(TitleStyles);
+
 const Typography = (props: TypographyPropsInterface) => {
     const { children, variant, color, align } = props;
 
     if (variant === TypographyVariant.body) {
-        const Body = styled.p({
-            ...defaultStyles,
-            color,
-            textAlign: align,
-            fontSize: 15,
-        });
 
         return (
-            <Body color={color}>
+            <Body align={align} color={color}>
                 {children}
             </Body>
         );
     } else if (variant === TypographyVariant.title) {
-        const Title = styled.h2({
-            ...defaultStyles,
-            color,
-            textAlign: align,
-            fontSize: 20,
-        });
 
         return (
-            <Title color={color}>
+            <Title align={align} color={color}>
                 {children}
             </Title>
         );
