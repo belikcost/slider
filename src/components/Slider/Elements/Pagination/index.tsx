@@ -1,12 +1,10 @@
 import React, { Dispatch, SetStateAction, useCallback } from "react";
 import styled from "styled-components";
 
-import { SlideInterface } from "../../../../types";
-
 
 interface PaginationPropsInterface {
     currentSlide: number;
-    slides: SlideInterface[];
+    slidesLength: number;
     setCurrentSlide: Dispatch<SetStateAction<number>>;
 }
 
@@ -43,11 +41,13 @@ const Pagination = styled.div`
   margin-top: 15px;
 `;
 
-const PaginationComponent = ({ currentSlide, slides, setCurrentSlide }: PaginationPropsInterface) => {
+const PaginationComponent = ({ currentSlide, slidesLength, setCurrentSlide }: PaginationPropsInterface) => {
+
+    const ArrayBySlidesLength = Array.from(Array(slidesLength));
 
     return (
         <Pagination>
-            {slides.map((slide, i) => (
+            {ArrayBySlidesLength.map((_, i) => (
                 <CircleComponent
                     active={currentSlide === i}
                     slideIndex={i}
@@ -59,9 +59,4 @@ const PaginationComponent = ({ currentSlide, slides, setCurrentSlide }: Paginati
     );
 };
 
-export default React.memo(PaginationComponent, (prevProps: PaginationPropsInterface, nextProps: PaginationPropsInterface) => {
-    const currentSlideAreEqual = prevProps.currentSlide === nextProps.currentSlide;
-    const slidesLengthAreEqual = prevProps.slides.length === nextProps.slides.length;
-
-    return currentSlideAreEqual && slidesLengthAreEqual;
-});
+export default React.memo(PaginationComponent);

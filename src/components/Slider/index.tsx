@@ -113,7 +113,11 @@ const Slider = ({ slides, navs, pags, loop, auto, delay, stopMouseHover }: Slide
                     />
                 </Container>
                 {pags && (
-                    <Pagination currentSlide={currentSlide} slides={slides} setCurrentSlide={setCurrentSlide}/>
+                    <Pagination
+                        currentSlide={currentSlide}
+                        slidesLength={slides.length}
+                        setCurrentSlide={setCurrentSlide}
+                    />
                 )}
             </div>
         </>
