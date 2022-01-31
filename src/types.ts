@@ -1,4 +1,8 @@
+interface SlideInterface {
+    img: string,
+    text: string
+}
 
-export {
-
+export type {
+    SlideInterface,
 }
